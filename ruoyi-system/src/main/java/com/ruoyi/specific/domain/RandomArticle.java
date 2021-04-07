@@ -23,6 +23,11 @@ public class RandomArticle extends BaseEntity{
 	private String serviceUrl;
 	
 	private String type;
+
+	/** 评论量 **/
+	private int commentNum;
+	/** 点赞量 **/
+	private int approveNum;
 	
 	
 	
@@ -83,9 +88,20 @@ public class RandomArticle extends BaseEntity{
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	
-	
-	
 
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
+	public int getApproveNum() {
+		return approveNum;
+	}
+
+	public void setApproveNum(int approveNum) {
+		this.approveNum = approveNum;
+	}
 }

@@ -25,6 +25,11 @@ public class RandomText extends BaseEntity{
 	/** 1 励志 2 抒情 3 奋斗 **/
 	private String cType;
 
+	/** 评论量 **/
+	private int commentNum;
+	/** 点赞量 **/
+	private int approveNum;
+
 	public String getNumber() {
 		return number;
 	}
@@ -72,6 +77,20 @@ public class RandomText extends BaseEntity{
 	public void setId(int id) {
 		this.id = id;
 	}
-	
-	
+
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
+	public int getApproveNum() {
+		return approveNum;
+	}
+
+	public void setApproveNum(int approveNum) {
+		this.approveNum = approveNum;
+	}
 }

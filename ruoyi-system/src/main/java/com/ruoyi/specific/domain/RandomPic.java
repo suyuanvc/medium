@@ -26,6 +26,11 @@ public class RandomPic extends BaseEntity{
 	
 	private String picshow;
 
+	/** 评论量 **/
+	private int commentNum;
+	/** 点赞量 **/
+	private int approveNum;
+
 	public int getId() {
 		return id;
 	}
@@ -90,7 +95,19 @@ public class RandomPic extends BaseEntity{
 		this.picshow = picshow;
 	}
 
-	
-	
+	public int getCommentNum() {
+		return commentNum;
+	}
 
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
+	public int getApproveNum() {
+		return approveNum;
+	}
+
+	public void setApproveNum(int approveNum) {
+		this.approveNum = approveNum;
+	}
 }
