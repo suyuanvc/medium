@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<th:block th:include="include :: header('Summernote富文本编辑器')" />
+<th:block th:include="include :: summernote-css" />
+</head>
+<body>
+	<div class="main-content">
+		<form id="form-text-add" class="form-horizontal">
+			<input name="content" type="hidden" id="content" />
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">美文番号：</label>
+						<div class="col-sm-8">
+							<input name="number" placeholder="请输入番号" class="form-control"
+								type="text" maxlength="32" required>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<label class="col-xs-2 control-label">美文标题：</label>
+						<div class="col-xs-8">
+							<input name="title" placeholder="请输入标题" class="form-control"
+								type="text" maxlength="32" required>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label class="col-sm-4 control-label">美文类别：</label>
+						<div class="col-sm-8">
+							<select name="type" class="form-control m-b"
+								th:with="type=${@dict.getType('article_type')}">
+								<option th:each="dict : ${type}" th:text="${dict.dictLabel}"
+									th:value="${dict.dictValue}"></option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="form-group">
+					<label class="col-xs-2 control-label">美文内容：</label>
+					<div class="col-xs-9">
+						<input class="summernote" name="content" id="content">
+					</div>
+					</div>
+
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<div class="row">
+		<div class="col-sm-offset-5 col-sm-10">
+			<button type="button" class="btn btn-sm btn-primary"
+				onclick="submitHandler()">
+				<i class="fa fa-check"></i>保 存
+			</button>
+			&nbsp;
+			<button type="button" class="btn btn-sm btn-danger"
+				onclick="closeItem()">
+				<i class="fa fa-reply-all"></i>关 闭
+			</button>
+		</div>
+	</div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: summernote-js" />
+	<script>
+		var prefix = ctx + "personality/lettres";
+
+		$("#form-text-add").validate({
+			onkeyup : false,
+			/**
+			
+			rules:{
+				number:{
+					minlength: 8,
+					maxlength: 32,
+					remote: {
+			            url: prefix + "/checkLoginNameUnique",
+			            type: "post",
+			            dataType: "json",
+			            data: {
+			            	"loginName": function() {
+			                    return $.common.trim($("#loginName").val());
+			                }
+			            },
+			            dataFilter: function(data, type) {
+			            	return $.validate.unique(data);
+			            }
+			        }
+				}
+			},
+			messages: {
+			    "loginName": {
+			        remote: "用户已经存在"
+			    }
+			},
+			 **/
+			focusCleanup : true
+		});
+
+		function submitHandler() {
+			var markupStr = $('.summernote').summernote('code');
+			$("#content").val(markupStr);
+			var data = $("#form-text-add").serializeArray();
+			
+			$.operate.saveTab(prefix + "/add", data);
+		}
+	</script>
+	<script>
+		$(document).ready(function() {
+			$('.summernote').summernote({
+				height : 200,
+				lang : 'zh-CN',
+				callbacks : {
+					onImageUpload : function(files) {
+						sendFile(files[0]);
+					},
+					onMediaDelete : function(target) {
+						removeFile(target);
+					}
+
+				}
+			})
+		});
+
+		function sendFile(files) {
+			var data = new FormData();
+			data.append("file", files);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : ctx + "personality/lettres/uploadPic", //将该请求发送到自己的Controller层的处理方法路径
+				cache : false,
+				contentType : false,
+				processData : false,
+				success : function(data) {
+					console.log(data);
+					$('.summernote').summernote('insertImage', data.url);
+				},
+				error : function() {
+					alert("上传失败！");
+				}
+			});
+		}
+
+		//删除图片
+		function removeFile(target) {
+			var imgsrc = target[0].currentSrc;
+			var data = new FormData();
+			data.append("urlimg", imgsrc);
+			$.ajax({
+				data : data,
+				type : "POST",
+				url : ctx + "personality/lettres/removePic",
+				cache : false,
+				contentType : false,
+				processData : false,
+				success : function(data) {
+					console.log(data.message);
+				},
+				error : function() {
+					console.log(data.message);
+				}
+			});
+
+		}
+	</script>
+
+</body>
+</html>

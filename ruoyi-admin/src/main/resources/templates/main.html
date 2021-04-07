@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title>我的媒体</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/animate.min.css" th:href="@{/css/main/animate.min.css}" rel="stylesheet"/>
+    <link href="../static/css/main/style.min862f.css" th:href="@{/css/main/style.min862f.css}" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+    <div class="row  border-bottom white-bg dashboard-header">
+        <div class="col-sm-12">
+            <blockquote class="text-warning" style="font-size:14px">
+            
+            <h4 class="text-danger">我的自媒体网站(第 [[${days}]] 天)</h4>
+                                          <a>深入了解没有捷径  只能一步一步、脚踏实地的学习 和坚持不懈持之以恒的付出</a> 
+                                          
+                
+            </blockquote>
+
+            <hr>
+        </div>
+        
+        <div class="col-sm-5">
+            <h2>suyuan的自媒体之家</h2>
+            <p>如果你苦于一直没有突破，那么不要自欺欺人了，脚踏实地的去学习吧，把自己位置放低点，先学一小块</p>
+            <p>主人寄语：每天完善一点点！（2021-04-02 23:00）</p>
+            <p>
+                <b>当前版本：</b><span>v[[${version}]]</span>
+            </p>
+            <p>
+               
+            </p>
+            <br>
+            <p>
+                <a class="btn btn-success btn-outline" href="https://www.toutiao.com/c/user/51189219147/" target="_blank">
+                    <i class="fa fa-cloud"> </i> 访问头条号
+                </a>
+                <a class="btn btn-white btn-bitbucket" href="https://baijiahao.baidu.com/u?app_id=1552483348929700" target="_blank">
+                    <i class="fa fa-home"></i> 访问百家号
+                </a>
+            </p>
+        </div>
+        
+        
+        
+        <div class="col-sm-4">
+            <h4>网站类别：</h4>
+            <ol>
+                <li><a>百家号</a></li>
+                <li><a>头条号</a></li>
+                <li><a>网易号</a></li>
+                <li><a>一点号</a></li>
+				<li><a>搜狐号</a></li>
+                <li><a>新浪号</a></li>
+                
+                <li>更多……</li>
+            </ol>
+        </div>
+        
+       
+        <div class="col-sm-3">
+            <h2>你好，世界！</h2>
+            <small>待开发模块，敬请期待！</small>
+            <br>
+           
+        </div>
+        
+
+    </div>
+    
+    
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-4">
+
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>联系信息</h5>
+
+                    </div>
+                    <div class="ibox-content">
+                        <p><i class="fa fa-send-o"></i> 个人中心：<a href="https://www.toutiao.com/c/user/51189219147/" target="_blank">https://www.toutiao.com/c/user/51189219147/</a>
+                        </p>
+                        <p><i class="fa fa-qq"></i> QQ群：<s>满1389287</s> 
+                        </p>
+                        <p>
+                        	<i class="fa fa-qq"></i> QQ：<a>1396627527</a> 
+                        </p>
+                        <p>
+                        	<i class="fa fa-mobile"></i> 手机：<a>13093692146</a>
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>更新日志</h5>
+                    </div>
+                    <div class="ibox-content no-padding">
+                        <div class="panel-body">
+                            <div class="panel-group" id="version">
+                         
+                         
+							   
+								
+								
+								
+                            	
+                                
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#version" href="#v00">v1.0.0</a><code class="pull-right">2021.03.04</code>
+                                        </h4>
+                                    </div>
+                                    <div id="v00" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <ol>
+                                                <li>suyuan自媒体之家正式立项开发。</li>
+                                                <li>集成redis缓存。</li>
+                                                <li>心情驿站模块需求开发。</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>聊聊</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="alert alert-warning">
+                            	加入我 我们一起壮大（点击图片放大）
+                        </div>
+                        <p id="pay-qrcode">
+                            <a href="javascript:;"><img th:src="@{/img/wcb.png}" width="100%" >
+                            </a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+    <script type="text/javascript">
+	    $('#pay-qrcode').click(function(){
+	        var html=$(this).html();
+	        parent.layer.open({
+	            title: false,
+	            type: 1,
+	            closeBtn:false,
+	            shadeClose:true,
+	            area: ['500px', '500px'],
+	            content: html
+	        });
+	    });
+    </script>
+</body>
+</html>

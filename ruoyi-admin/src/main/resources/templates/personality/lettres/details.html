@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('美文详情')" />
+		<th:block th:include="include :: summernote-css" />
+</head>
+<body class="white-bg">
+	<div class="wrapper wrapper-content animated fadeInRight ibox-content">
+		<form class="form-horizontal m" id="form-user-edit">
+			<input name="content" type="hidden" id="content" th:field="${article.content}" />
+			<!-- 
+			<div class="form-group">
+				<label class="col-sm-3 control-label">美文番号：</label>
+				<div class="col-sm-8">
+					<div class="form-control-static" th:text="${article.number}"></div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">美文标题：</label>
+				<div class="col-sm-8">
+				    <div class="form-control-static" th:text="${article.title}"></div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label class="col-sm-3 control-label">美文类别：</label>
+                <div class="col-sm-8">
+                    <div class="form-control-static" th:text="${@dict.getLabel('mood_type', article.type)}"></div>
+                </div>
+			</div>
+			 -->
+			
+			<div class="form-group" id="con">
+				<div class="summernote" name="content" id="content">
+				</div>
+			</div>
+		</form>
+	
+	</div>
+	
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: summernote-js" />
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$('.summernote').summernote({
+			height : 200,
+			lang : 'zh-CN',
+			focus: false 
+			
+		});
+		
+		
+		var content = $("#content").val();
+		$('.summernote').summernote('code', content);
+		
+		  
+		 $("#con").removeClass("no-padding");
+         var aHTML = $('.summernote').summernote('code');
+         $('.summernote').summernote('destroy');
+		
+	});
+	</script>
+
+</body>

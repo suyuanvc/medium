@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.specific.mapper.RandomArticleMapper">
+    
+    <resultMap type="RandomArticle" id="RandomArticleResult">
+    	<id     property="id"      column="id"      />
+        <result property="content"    column="content"    />
+        <result property="title"     column="title"     />
+        <result property="number"    column="number"    />
+        <result property="picUrl"     column="pic_url"     />
+        <result property="serviceUrl"     column="service_url"     />
+        <result property="type"     column="type"     />
+        <result property="createBy"      column="create_by"      />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"      column="update_by"      />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+    
+    <sql id="selectRandomArticleVo">
+        select id, content, title, number,pic_url, service_url,type,create_by, create_time, update_by, update_time  
+		from random_article 
+    </sql>
+    
+    <!-- 查询条件 -->
+	<sql id="sqlwhereSearch">
+		<where>
+			
+			<if test="number !=null and number != ''">
+				and number = #{number}
+			</if>
+			<if test="type !=null and type != ''">
+				and type = #{type}
+			</if>
+			<if test="content !=null and content != ''">
+				and content = #{content}
+			</if>
+			<if test="title !=null and title != ''">
+				and title = #{title} 
+			</if>
+		</where>
+		
+	</sql>
+	
+	<select id="selectRandomArticle" parameterType="Integer" resultMap="RandomArticleResult">
+        <include refid="selectRandomArticleVo"/>
+        where id = #{id} 
+    </select>
+    
+    <select id="selectRandomArticleList" parameterType="RandomArticle" resultMap="RandomArticleResult">
+        <include refid="selectRandomArticleVo"/>
+        <include refid="sqlwhereSearch"/>
+        order by create_time  
+    </select>
+    
+    <select id="RandomArticleIdList" parameterType="RandomArticle" resultType="String">
+        select id from random_article  
+		<where>
+			<if test="number !=null and number != ''">
+				and number = #{number}
+			</if>
+			<if test="title !=null and title != ''">
+				and title = #{title}
+			</if>
+			<if test="type !=null and type != ''">
+				and type = #{type}
+			</if>
+			
+		</where>
+		
+    </select>
+    
+    
+    
+    
+    
+    <insert id="insertRandomArticle" parameterType="RandomArticle">
+        insert into random_article (
+			<if test="content != null and content != '' ">content,</if>
+			<if test="title != null and title != '' ">title,</if>
+			<if test="number != null and number != '' ">number,</if>
+			<if test="picUrl != null and picUrl != '' ">pic_url,</if>
+			<if test="serviceUrl != null and serviceUrl != '' ">service_url,</if>
+			<if test="type != null and type != '' ">type,</if>
+			<if test="createBy != null and createBy != ''">create_by,</if>
+ 			create_time
+        )values(
+			<if test="content != null and content != ''">#{content},</if>
+			<if test="title != null and title != ''">#{title},</if>
+			<if test="number != null and number != ''">#{number},</if>
+			<if test="picUrl != null and picUrl != ''">#{picUrl},</if>
+			<if test="serviceUrl != null and serviceUrl != ''">#{serviceUrl},</if>
+			<if test="type != null and type != ''">#{type},</if>
+			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			sysdate()
+		)
+    </insert>
+	 
+    <update id="updateRandomArticle" parameterType="RandomArticle">
+        update random_article 
+        <set>
+            <if test="content != null and content != ''">content = #{content},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="number != null and number != ''">number = #{number},</if>
+            <if test="picUrl != null and picUrl != ''">pic_url = #{picUrl},</if>
+            <if test="serviceUrl != null and serviceUrl != ''">service_url = #{serviceUrl},</if>
+            <if test="type != null and type != ''">type = #{type},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+ 			update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+	
+    <delete id="deleteRandomArticles" parameterType="String">
+        delete from random_article where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+        	#{id}
+        </foreach>
+    </delete>
+    
+     <delete id="deleteRandomArticle" parameterType="int">
+        delete from random_article where id = #{id} 
+    </delete>
+    
+</mapper>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增用户')" />
+	<th:block th:include="include :: select2-css" />
+</head>
+<body>
+    <div class="main-content">
+        <form id="form-text-add" class="form-horizontal">
+        <input name="deptId" type="hidden" id="treeId"/>
+            <h4 class="form-header h4">基本信息</h4>
+            <div class="row">
+            	<div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">文本番号：</label>
+                        <div class="col-xs-4">
+                            <input name="number" placeholder="请输入番号" class="form-control" type="text" maxlength="32" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">文本类型：</label>
+                        <div class="col-sm-8">
+                            <select name="type" class="form-control m-b" th:with="type=${@dict.getType('text_type')}">
+				                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+				            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label">驿站类别：</label>
+                        <div class="col-sm-8">
+                           <select name="cType" class="form-control m-b" th:with="type=${@dict.getType('mood_type')}">
+				                <option th:each="dict : ${type}" th:text="${dict.dictLabel}" th:value="${dict.dictValue}"></option>
+				            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label class="col-xs-2 control-label">精句内容：</label>
+                        <div class="col-xs-10">
+                            <textarea name="content" maxlength="128" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+      
+    <div class="row">
+        <div class="col-sm-offset-5 col-sm-10">
+            <button type="button" class="btn btn-sm btn-primary" onclick="submitHandler()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+            <button type="button" class="btn btn-sm btn-danger" onclick="closeItem()"><i class="fa fa-reply-all"></i>关 闭 </button>
+        </div>
+    </div>
+	<th:block th:include="include :: footer" />
+	<th:block th:include="include :: select2-js" />
+	<script>
+	    var prefix = ctx + "personality/text";
+	
+        $("#form-text-add").validate({
+        	onkeyup: false,
+        	/**
+        	
+        	rules:{
+        		number:{
+        			minlength: 8,
+        			maxlength: 32,
+        			remote: {
+                        url: prefix + "/checkLoginNameUnique",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                        	"loginName": function() {
+                                return $.common.trim($("#loginName").val());
+                            }
+                        },
+                        dataFilter: function(data, type) {
+                        	return $.validate.unique(data);
+                        }
+                    }
+        		}
+        	},
+        	messages: {
+                "loginName": {
+                    remote: "用户已经存在"
+                }
+            },
+            **/
+            focusCleanup: true
+        });
+        
+        function submitHandler() {
+	        	var data = $("#form-text-add").serializeArray();
+	        	
+	        	$.operate.saveTab(prefix + "/add", data);
+	    }
+         
+        /* 用户管理-新增-选择部门树 */
+        function selectDeptTree() {
+        	var treeId = $("#treeId").val();
+        	var deptId = $.common.isEmpty(treeId) ? "100" : $("#treeId").val();
+        	var url = ctx + "system/dept/selectDeptTree/" + deptId;
+			var options = {
+				title: '选择部门',
+				width: "380",
+				url: url,
+				callBack: doSubmit
+			};
+			$.modal.openOptions(options);
+		}
+		
+		function doSubmit(index, layero){
+			var tree = layero.find("iframe")[0].contentWindow.$._tree;
+			var body = layer.getChildFrame('body', index);
+   			$("#treeId").val(body.find('#treeId').val());
+   			$("#treeName").val(body.find('#treeName').val());
+   			layer.close(index);
+		}
+
+		$(function() {
+            $('#post').select2({
+                placeholder: "请选择岗位",
+                allowClear: true
+            });
+        })
+    </script>
+</body>
+</html>

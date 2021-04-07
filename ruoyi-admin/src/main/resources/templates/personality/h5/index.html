@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <link th:href="@{/h5/css/weui.css}" rel="stylesheet"/>
+    <link th:href="@{/h5/css/weuix.css}" rel="stylesheet"/>
+    <script th:src="@{/h5/js/zepto.min.js}"></script>
+    <script  th:src="@{/h5/js/zepto.weui.js}"></script>
+    <script th:src="@{/h5/js/swipe.js}"></script>
+
+
+</head>
+
+<body ontouchstart>
+<div class="container">
+    <div class="page-hd">
+        <h3 class="page-hd-title">
+            心情驿站
+        </h3>
+        
+       
+        <p>
+        	[[${mw}]]
+        	
+        	
+        	
+        </p>
+     </div>
+    
+    <div>
+        <!-- <img alt="" width="100%;" th:src="@{/h5/img/ll.jpg}">  -->
+        <img width="100%;" th:src="@{${url}}"  class="img-circle"> 
+
+    </div>
+    <div>
+    	<a style="float:right;" href="/h5/show/index">换一组--></a>
+    
+    </div>
+</div>
+
+
+
+</body>
+
+
+
+</html>
