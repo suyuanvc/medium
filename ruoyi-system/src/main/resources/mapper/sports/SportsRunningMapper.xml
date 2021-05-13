@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sports.mapper.SportsRunningMapper">
+    
+    <resultMap type="SportsRunning" id="SportsRunningResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="personNumber"    column="person_number"    />
+        <result property="city"    column="city"    />
+        <result property="address"    column="address"    />
+        <result property="mileage"    column="mileage"    />
+        <result property="type"    column="type"    />
+        <result property="picUrl"    column="picUrl"    />
+        <result property="scale"    column="scale"    />
+        <result property="serviceUrl"    column="serviceUrl"    />
+        <result property="ranking"    column="ranking"    />
+        <result property="totalMileage"    column="totalMileage"    />
+        <result property="totalTime"    column="totalTime"    />
+        <result property="totalActivity"    column="totalActivity"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="createBy"    column="createBy"    />
+        <result property="updateBy"    column="updateBy"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="remark"    column="remark"    />
+        <result property="delflag"    column="delflag"    />
+    </resultMap>
+
+    <sql id="selectSportsRunningVo">
+        select id, number, name, introduction, person_number, city, address, mileage, type, picUrl, scale, serviceUrl, ranking, totalMileage, totalTime, totalActivity, createTime, createBy, updateBy, updateTime, remark, delflag from sports_running
+    </sql>
+
+    <select id="selectSportsRunningList" parameterType="SportsRunning" resultMap="SportsRunningResult">
+        <include refid="selectSportsRunningVo"/>
+        <where>  
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="introduction != null  and introduction != ''"> and introduction = #{introduction}</if>
+            <if test="personNumber != null "> and person_number = #{personNumber}</if>
+            <if test="city != null  and city != ''"> and city = #{city}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="mileage != null  and mileage != ''"> and mileage = #{mileage}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="picUrl != null  and picUrl != ''"> and picUrl = #{picUrl}</if>
+            <if test="scale != null  and scale != ''"> and scale = #{scale}</if>
+            <if test="serviceUrl != null  and serviceUrl != ''"> and serviceUrl = #{serviceUrl}</if>
+            <if test="ranking != null "> and ranking = #{ranking}</if>
+            <if test="totalMileage != null "> and totalMileage = #{totalMileage}</if>
+            <if test="totalTime != null "> and totalTime = #{totalTime}</if>
+            <if test="totalActivity != null "> and totalActivity = #{totalActivity}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and createBy = #{createBy}</if>
+            <if test="updateBy != null  and updateBy != ''"> and updateBy = #{updateBy}</if>
+            <if test="updateTime != null "> and updateTime = #{updateTime}</if>
+            <if test="delflag != null  and delflag != ''"> and delflag = #{delflag}</if>
+        </where>
+    </select>
+    
+    <select id="selectSportsRunningById" parameterType="Long" resultMap="SportsRunningResult">
+        <include refid="selectSportsRunningVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSportsRunning" parameterType="SportsRunning" useGeneratedKeys="true" keyProperty="id">
+        insert into sports_running
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="name != null">name,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="personNumber != null">person_number,</if>
+            <if test="city != null">city,</if>
+            <if test="address != null">address,</if>
+            <if test="mileage != null">mileage,</if>
+            <if test="type != null">type,</if>
+            <if test="picUrl != null">picUrl,</if>
+            <if test="scale != null">scale,</if>
+            <if test="serviceUrl != null">serviceUrl,</if>
+            <if test="ranking != null">ranking,</if>
+            <if test="totalMileage != null">totalMileage,</if>
+            <if test="totalTime != null">totalTime,</if>
+            <if test="totalActivity != null">totalActivity,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="createBy != null">createBy,</if>
+            <if test="updateBy != null">updateBy,</if>
+            <if test="updateTime != null">updateTime,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delflag != null">delflag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="name != null">#{name},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="personNumber != null">#{personNumber},</if>
+            <if test="city != null">#{city},</if>
+            <if test="address != null">#{address},</if>
+            <if test="mileage != null">#{mileage},</if>
+            <if test="type != null">#{type},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="scale != null">#{scale},</if>
+            <if test="serviceUrl != null">#{serviceUrl},</if>
+            <if test="ranking != null">#{ranking},</if>
+            <if test="totalMileage != null">#{totalMileage},</if>
+            <if test="totalTime != null">#{totalTime},</if>
+            <if test="totalActivity != null">#{totalActivity},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delflag != null">#{delflag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSportsRunning" parameterType="SportsRunning">
+        update sports_running
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="personNumber != null">person_number = #{personNumber},</if>
+            <if test="city != null">city = #{city},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="mileage != null">mileage = #{mileage},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="picUrl != null">picUrl = #{picUrl},</if>
+            <if test="scale != null">scale = #{scale},</if>
+            <if test="serviceUrl != null">serviceUrl = #{serviceUrl},</if>
+            <if test="ranking != null">ranking = #{ranking},</if>
+            <if test="totalMileage != null">totalMileage = #{totalMileage},</if>
+            <if test="totalTime != null">totalTime = #{totalTime},</if>
+            <if test="totalActivity != null">totalActivity = #{totalActivity},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="createBy != null">createBy = #{createBy},</if>
+            <if test="updateBy != null">updateBy = #{updateBy},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delflag != null">delflag = #{delflag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSportsRunningById" parameterType="Long">
+        delete from sports_running where id = #{id}
+    </delete>
+
+    <delete id="deleteSportsRunningByIds" parameterType="String">
+        delete from sports_running where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

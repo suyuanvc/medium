@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('【请填写功能名称】列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>编号：</label>
+                                <input type="text" name="number"/>
+                            </li>
+                            <li>
+                                <label>跑步团名称：</label>
+                                <input type="text" name="name"/>
+                            </li>
+                            <li>
+                                <label>跑步团简介：</label>
+                                <input type="text" name="introduction"/>
+                            </li>
+                            <li>
+                                <label>成员总数：</label>
+                                <input type="text" name="personNumber"/>
+                            </li>
+                            <li>
+                                <label>跑步团所在城市：</label>
+                                <input type="text" name="city"/>
+                            </li>
+                            <li>
+                                <label>跑步团所在城市具体地点：</label>
+                                <input type="text" name="address"/>
+                            </li>
+                            <li>
+                                <label>类型 5公里 10公里：</label>
+                                <input type="text" name="mileage"/>
+                            </li>
+                            <li>
+                                <label>1 成员只能个人  2 成员只能圈子  3 成员既可以有个人也可以有圈子：</label>
+                                <select name="type">
+                                    <option value="">所有</option>
+                                    <option value="-1">代码生成请选择字典属性</option>
+                                </select>
+                            </li>
+                            <li>
+                                <label>跑步团头像地址：</label>
+                                <input type="text" name="picUrl"/>
+                            </li>
+                            <li>
+                                <label>人数规模：10人 20人 50人 100人 200人 500人 1000人等等：</label>
+                                <input type="text" name="scale"/>
+                            </li>
+                            <li>
+                                <label>跑步团头像存储服务器地址：</label>
+                                <input type="text" name="serviceUrl"/>
+                            </li>
+                            <li>
+                                <label>排名：</label>
+                                <input type="text" name="ranking"/>
+                            </li>
+                            <li>
+                                <label>跑步总里程：</label>
+                                <input type="text" name="totalMileage"/>
+                            </li>
+                            <li>
+                                <label>跑步总时长：</label>
+                                <input type="text" name="totalTime"/>
+                            </li>
+                            <li>
+                                <label>发起加入活动总数：</label>
+                                <input type="text" name="totalActivity"/>
+                            </li>
+                            <li>
+                                <label>发起加入活动总数：</label>
+                                <input type="text" class="time-input" placeholder="请选择发起加入活动总数" name="createTime"/>
+                            </li>
+                            <li>
+                                <label>发起加入活动总数：</label>
+                                <input type="text" name="createBy"/>
+                            </li>
+                            <li>
+                                <label>发起加入活动总数：</label>
+                                <input type="text" name="updateBy"/>
+                            </li>
+                            <li>
+                                <label>发起加入活动总数：</label>
+                                <input type="text" class="time-input" placeholder="请选择发起加入活动总数" name="updateTime"/>
+                            </li>
+                            <li>
+                                <label>发起加入活动总数：</label>
+                                <input type="text" name="delflag"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:running:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:running:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:running:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:running:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:running:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:running:remove')}]];
+        var prefix = ctx + "system/running";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "【请填写功能名称】",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'id',
+                    title: '发起加入活动总数',
+                    visible: false
+                },
+                {
+                    field: 'number',
+                    title: '编号'
+                },
+                {
+                    field: 'name',
+                    title: '跑步团名称'
+                },
+                {
+                    field: 'introduction',
+                    title: '跑步团简介'
+                },
+                {
+                    field: 'personNumber',
+                    title: '成员总数'
+                },
+                {
+                    field: 'city',
+                    title: '跑步团所在城市'
+                },
+                {
+                    field: 'address',
+                    title: '跑步团所在城市具体地点'
+                },
+                {
+                    field: 'mileage',
+                    title: '类型 5公里 10公里'
+                },
+                {
+                    field: 'type',
+                    title: '1 成员只能个人  2 成员只能圈子  3 成员既可以有个人也可以有圈子'
+                },
+                {
+                    field: 'picUrl',
+                    title: '跑步团头像地址'
+                },
+                {
+                    field: 'scale',
+                    title: '人数规模：10人 20人 50人 100人 200人 500人 1000人等等'
+                },
+                {
+                    field: 'serviceUrl',
+                    title: '跑步团头像存储服务器地址'
+                },
+                {
+                    field: 'ranking',
+                    title: '排名'
+                },
+                {
+                    field: 'totalMileage',
+                    title: '跑步总里程'
+                },
+                {
+                    field: 'totalTime',
+                    title: '跑步总时长'
+                },
+                {
+                    field: 'totalActivity',
+                    title: '发起加入活动总数'
+                },
+                {
+                    field: 'createTime',
+                    title: '发起加入活动总数'
+                },
+                {
+                    field: 'createBy',
+                    title: '发起加入活动总数'
+                },
+                {
+                    field: 'updateBy',
+                    title: '发起加入活动总数'
+                },
+                {
+                    field: 'updateTime',
+                    title: '发起加入活动总数'
+                },
+                {
+                    field: 'remark',
+                    title: '发起加入活动总数'
+                },
+                {
+                    field: 'delflag',
+                    title: '发起加入活动总数'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

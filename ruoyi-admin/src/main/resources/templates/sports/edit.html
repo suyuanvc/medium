@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('修改【请填写功能名称】')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-running-edit" th:object="${sportsRunning}">
+            <input name="id" th:field="*{id}" type="hidden">
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">编号：</label>
+                <div class="col-sm-8">
+                    <input name="number" th:field="*{number}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步团名称：</label>
+                <div class="col-sm-8">
+                    <input name="name" th:field="*{name}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步团简介：</label>
+                <div class="col-sm-8">
+                    <input name="introduction" th:field="*{introduction}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">成员总数：</label>
+                <div class="col-sm-8">
+                    <input name="personNumber" th:field="*{personNumber}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步团所在城市：</label>
+                <div class="col-sm-8">
+                    <input name="city" th:field="*{city}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步团所在城市具体地点：</label>
+                <div class="col-sm-8">
+                    <input name="address" th:field="*{address}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">类型 5公里 10公里：</label>
+                <div class="col-sm-8">
+                    <input name="mileage" th:field="*{mileage}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">1 成员只能个人  2 成员只能圈子  3 成员既可以有个人也可以有圈子：</label>
+                <div class="col-sm-8">
+                    <select name="type" class="form-control m-b">
+                        <option value="">所有</option>
+                    </select>
+                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代码生成请选择字典属性</span>
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步团头像地址：</label>
+                <div class="col-sm-8">
+                    <input name="picUrl" th:field="*{picUrl}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">人数规模：10人 20人 50人 100人 200人 500人 1000人等等：</label>
+                <div class="col-sm-8">
+                    <input name="scale" th:field="*{scale}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步团头像存储服务器地址：</label>
+                <div class="col-sm-8">
+                    <input name="serviceUrl" th:field="*{serviceUrl}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">排名：</label>
+                <div class="col-sm-8">
+                    <input name="ranking" th:field="*{ranking}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步总里程：</label>
+                <div class="col-sm-8">
+                    <input name="totalMileage" th:field="*{totalMileage}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">跑步总时长：</label>
+                <div class="col-sm-8">
+                    <input name="totalTime" th:field="*{totalTime}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发起加入活动总数：</label>
+                <div class="col-sm-8">
+                    <input name="totalActivity" th:field="*{totalActivity}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发起加入活动总数：</label>
+                <div class="col-sm-8">
+                    <input name="remark" th:field="*{remark}" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="form-group">    
+                <label class="col-sm-3 control-label">发起加入活动总数：</label>
+                <div class="col-sm-8">
+                    <input name="delflag" th:field="*{delflag}" class="form-control" type="text">
+                </div>
+            </div>
+        </form>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var prefix = ctx + "system/running";
+        $("#form-running-edit").validate({
+            focusCleanup: true
+        });
+
+        function submitHandler() {
+            if ($.validate.form()) {
+                $.operate.save(prefix + "/edit", $('#form-running-edit').serialize());
+            }
+        }
+    </script>
+</body>
+</html>
