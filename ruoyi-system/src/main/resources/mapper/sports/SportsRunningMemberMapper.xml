@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sports.mapper.SportsRunningMemberMapper">
+    
+    <resultMap type="SportsRunningMember" id="SportsRunningMemberResult">
+        <result property="id"    column="id"    />
+        <result property="type"    column="type"    />
+        <result property="memberId"    column="memberId"    />
+        <result property="name"    column="name"    />
+        <result property="idCard"    column="idCard"    />
+        <result property="age"    column="age"    />
+        <result property="sex"    column="sex"    />
+        <result property="phone"    column="phone"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="createBy"    column="createBy"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="updateBy"    column="updateBy"    />
+        <result property="remark"    column="remark"    />
+        <result property="delflag"    column="delflag"    />
+        <result property="hobby"    column="hobby"    />
+        <result property="picUrl"    column="picUrl"    />
+        <result property="nikeName"    column="nike_name"    />
+    </resultMap>
+
+    <sql id="selectSportsRunningMemberVo">
+        select id, type, memberId, name, idCard, age, sex, phone, createTime, createBy, updateTime, updateBy, remark, delflag, hobby, picUrl, nike_name from sports_running_member
+    </sql>
+
+    <select id="selectSportsRunningMemberList" parameterType="SportsRunningMember" resultMap="SportsRunningMemberResult">
+        <include refid="selectSportsRunningMemberVo"/>
+        <where>  
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="memberId != null  and memberId != ''"> and memberId = #{memberId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and idCard = #{idCard}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and createBy = #{createBy}</if>
+            <if test="updateTime != null "> and updateTime = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and updateBy = #{updateBy}</if>
+            <if test="delflag != null  and delflag != ''"> and delflag = #{delflag}</if>
+            <if test="hobby != null  and hobby != ''"> and hobby = #{hobby}</if>
+            <if test="picUrl != null  and picUrl != ''"> and picUrl = #{picUrl}</if>
+            <if test="nikeName != null  and nikeName != ''"> and nike_name like concat('%', #{nikeName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectSportsRunningMemberById" parameterType="Long" resultMap="SportsRunningMemberResult">
+        <include refid="selectSportsRunningMemberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSportsRunningMember" parameterType="SportsRunningMember" useGeneratedKeys="true" keyProperty="id">
+        insert into sports_running_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="type != null">type,</if>
+            <if test="memberId != null">memberId,</if>
+            <if test="name != null">name,</if>
+            <if test="idCard != null">idCard,</if>
+            <if test="age != null">age,</if>
+            <if test="sex != null">sex,</if>
+            <if test="phone != null">phone,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="createBy != null">createBy,</if>
+            <if test="updateTime != null">updateTime,</if>
+            <if test="updateBy != null">updateBy,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delflag != null">delflag,</if>
+            <if test="hobby != null">hobby,</if>
+            <if test="picUrl != null">picUrl,</if>
+            <if test="nikeName != null">nike_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="type != null">#{type},</if>
+            <if test="memberId != null">#{memberId},</if>
+            <if test="name != null">#{name},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="age != null">#{age},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delflag != null">#{delflag},</if>
+            <if test="hobby != null">#{hobby},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="nikeName != null">#{nikeName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSportsRunningMember" parameterType="SportsRunningMember">
+        update sports_running_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="type != null">type = #{type},</if>
+            <if test="memberId != null">memberId = #{memberId},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="idCard != null">idCard = #{idCard},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="createBy != null">createBy = #{createBy},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="updateBy != null">updateBy = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delflag != null">delflag = #{delflag},</if>
+            <if test="hobby != null">hobby = #{hobby},</if>
+            <if test="picUrl != null">picUrl = #{picUrl},</if>
+            <if test="nikeName != null">nike_name = #{nikeName},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSportsRunningMemberById" parameterType="Long">
+        delete from sports_running_member where id = #{id}
+    </delete>
+
+    <delete id="deleteSportsRunningMemberByIds" parameterType="String">
+        delete from sports_running_member where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

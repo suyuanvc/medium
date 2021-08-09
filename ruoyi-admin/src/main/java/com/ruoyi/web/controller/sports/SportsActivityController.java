@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.sports.domain.SportsRunning;
-import com.ruoyi.sports.service.ISportsRunningService;
+import com.ruoyi.sports.domain.SportsActivity;
+import com.ruoyi.sports.service.ISportsActivityService;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.poi.ExcelUtil;
@@ -23,49 +23,49 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * 【请填写功能名称】Controller
  * 
  * @author ruoyi
- * @date 2021-05-12
+ * @date 2021-05-13
  */
 @Controller
-@RequestMapping("/sports/running")
-public class SportsRunningController extends BaseController
+@RequestMapping("/sports/activity")
+public class SportsActivityController extends BaseController
 {
-    private String prefix = "sports/running";
+    private String prefix = "sports/activity";
 
     @Autowired
-    private ISportsRunningService sportsRunningService;
+    private ISportsActivityService sportsActivityService;
 
-    @RequiresPermissions("sports:running:view")
+    @RequiresPermissions("sports:activity:view")
     @GetMapping()
-    public String running()
+    public String activity()
     {
-        return prefix + "/running";
+        return prefix + "/activity";
     }
 
     /**
      * 查询【请填写功能名称】列表
      */
-    @RequiresPermissions("sports:running:list")
+    @RequiresPermissions("sports:activity:list")
     @PostMapping("/list")
     @ResponseBody
-    public TableDataInfo list(SportsRunning sportsRunning)
+    public TableDataInfo list(SportsActivity sportsActivity)
     {
         startPage();
-        List<SportsRunning> list = sportsRunningService.selectSportsRunningList(sportsRunning);
+        List<SportsActivity> list = sportsActivityService.selectSportsActivityList(sportsActivity);
         return getDataTable(list);
     }
 
     /**
      * 导出【请填写功能名称】列表
      */
-    @RequiresPermissions("sports:running:export")
+    @RequiresPermissions("sports:activity:export")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     @ResponseBody
-    public AjaxResult export(SportsRunning sportsRunning)
+    public AjaxResult export(SportsActivity sportsActivity)
     {
-        List<SportsRunning> list = sportsRunningService.selectSportsRunningList(sportsRunning);
-        ExcelUtil<SportsRunning> util = new ExcelUtil<SportsRunning>(SportsRunning.class);
-        return util.exportExcel(list, "running");
+        List<SportsActivity> list = sportsActivityService.selectSportsActivityList(sportsActivity);
+        ExcelUtil<SportsActivity> util = new ExcelUtil<SportsActivity>(SportsActivity.class);
+        return util.exportExcel(list, "activity");
     }
 
     /**
@@ -80,13 +80,13 @@ public class SportsRunningController extends BaseController
     /**
      * 新增保存【请填写功能名称】
      */
-    @RequiresPermissions("sports:running:add")
+    @RequiresPermissions("sports:activity:add")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping("/add")
     @ResponseBody
-    public AjaxResult addSave(SportsRunning sportsRunning)
+    public AjaxResult addSave(SportsActivity sportsActivity)
     {
-        return toAjax(sportsRunningService.insertSportsRunning(sportsRunning));
+        return toAjax(sportsActivityService.insertSportsActivity(sportsActivity));
     }
 
     /**
@@ -95,32 +95,32 @@ public class SportsRunningController extends BaseController
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, ModelMap mmap)
     {
-        SportsRunning sportsRunning = sportsRunningService.selectSportsRunningById(id);
-        mmap.put("sportsRunning", sportsRunning);
+        SportsActivity sportsActivity = sportsActivityService.selectSportsActivityById(id);
+        mmap.put("sportsActivity", sportsActivity);
         return prefix + "/edit";
     }
 
     /**
      * 修改保存【请填写功能名称】
      */
-    @RequiresPermissions("sports:running:edit")
+    @RequiresPermissions("sports:activity:edit")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PostMapping("/edit")
     @ResponseBody
-    public AjaxResult editSave(SportsRunning sportsRunning)
+    public AjaxResult editSave(SportsActivity sportsActivity)
     {
-        return toAjax(sportsRunningService.updateSportsRunning(sportsRunning));
+        return toAjax(sportsActivityService.updateSportsActivity(sportsActivity));
     }
 
     /**
      * 删除【请填写功能名称】
      */
-    @RequiresPermissions("sports:running:remove")
+    @RequiresPermissions("sports:activity:remove")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
     @PostMapping( "/remove")
     @ResponseBody
     public AjaxResult remove(String ids)
     {
-        return toAjax(sportsRunningService.deleteSportsRunningByIds(ids));
+        return toAjax(sportsActivityService.deleteSportsActivityByIds(ids));
     }
 }

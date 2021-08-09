@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.study.mapper.StudyMainMapper">
+    
+    <resultMap type="StudyMain" id="StudyMainResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="type"    column="type"    />
+        <result property="address"    column="address"    />
+        <result property="hostMsg"    column="host_msg"    />
+        <result property="recommendBooks"    column="recommend_books"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="status"    column="status"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="leader"    column="leader"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="picUrl"    column="picUrl"    />
+        <result property="remark"    column="remark"    />
+        <result property="number"    column="number"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="leaderId"    column="leader_id"    />
+    </resultMap>
+
+    <sql id="selectStudyMainVo">
+        select id, name, type, address, host_msg, recommend_books, phone, email, status, del_flag, leader, create_by, create_time, update_by, update_time, picUrl, remark, number, introduction, leader_id from study_main
+    </sql>
+
+    <select id="selectStudyMainList" parameterType="StudyMain" resultMap="StudyMainResult">
+        <include refid="selectStudyMainVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="hostMsg != null  and hostMsg != ''"> and host_msg = #{hostMsg}</if>
+            <if test="recommendBooks != null  and recommendBooks != ''"> and recommend_books = #{recommendBooks}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="leader != null  and leader != ''"> and leader = #{leader}</if>
+            <if test="picUrl != null  and picUrl != ''"> and picUrl = #{picUrl}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="introduction != null  and introduction != ''"> and introduction = #{introduction}</if>
+            <if test="leaderId != null "> and leader_id = #{leaderId}</if>
+        </where>
+    </select>
+    
+    <select id="selectStudyMainById" parameterType="Long" resultMap="StudyMainResult">
+        <include refid="selectStudyMainVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStudyMain" parameterType="StudyMain" useGeneratedKeys="true" keyProperty="id">
+        insert into study_main
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="type != null">type,</if>
+            <if test="address != null">address,</if>
+            <if test="hostMsg != null">host_msg,</if>
+            <if test="recommendBooks != null">recommend_books,</if>
+            <if test="phone != null">phone,</if>
+            <if test="email != null">email,</if>
+            <if test="status != null">status,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="leader != null">leader,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="picUrl != null">picUrl,</if>
+            <if test="remark != null">remark,</if>
+            <if test="number != null">number,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="leaderId != null">leader_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="type != null">#{type},</if>
+            <if test="address != null">#{address},</if>
+            <if test="hostMsg != null">#{hostMsg},</if>
+            <if test="recommendBooks != null">#{recommendBooks},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="email != null">#{email},</if>
+            <if test="status != null">#{status},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="leader != null">#{leader},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="number != null">#{number},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="leaderId != null">#{leaderId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStudyMain" parameterType="StudyMain">
+        update study_main
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="hostMsg != null">host_msg = #{hostMsg},</if>
+            <if test="recommendBooks != null">recommend_books = #{recommendBooks},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="leader != null">leader = #{leader},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="picUrl != null">picUrl = #{picUrl},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="number != null">number = #{number},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="leaderId != null">leader_id = #{leaderId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudyMainById" parameterType="Long">
+        delete from study_main where id = #{id}
+    </delete>
+
+    <delete id="deleteStudyMainByIds" parameterType="String">
+        delete from study_main where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

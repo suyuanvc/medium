@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" >
 <head>
-    <th:block th:include="include :: header('新增【请填写功能名称】')" />
+    <th:block th:include="include :: header('新增【跑团信息】')" />
 </head>
 <body class="white-bg">
     <div class="wrapper wrapper-content animated fadeInRight ibox-content">
@@ -115,7 +115,7 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var prefix = ctx + "system/running"
+        var prefix = ctx + "sports/running"
         $("#form-running-add").validate({
             focusCleanup: true
         });

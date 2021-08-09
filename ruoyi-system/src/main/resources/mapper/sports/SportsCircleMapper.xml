@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sports.mapper.SportsCircleMapper">
+    
+    <resultMap type="SportsCircle" id="SportsCircleResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="personNumber"    column="person_number"    />
+        <result property="picUrl"    column="picUrl"    />
+        <result property="address"    column="address"    />
+        <result property="slogan"    column="slogan"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="createBy"    column="createBy"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="updateBy"    column="updateBy"    />
+        <result property="remark"    column="remark"    />
+        <result property="delflag"    column="delflag"    />
+    </resultMap>
+
+    <sql id="selectSportsCircleVo">
+        select id, number, name, introduction, person_number, picUrl, address, slogan, createTime, createBy, updateTime, updateBy, remark, delflag from sports_circle
+    </sql>
+
+    <select id="selectSportsCircleList" parameterType="SportsCircle" resultMap="SportsCircleResult">
+        <include refid="selectSportsCircleVo"/>
+        <where>  
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="introduction != null  and introduction != ''"> and introduction = #{introduction}</if>
+            <if test="personNumber != null "> and person_number = #{personNumber}</if>
+            <if test="picUrl != null  and picUrl != ''"> and picUrl = #{picUrl}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="slogan != null  and slogan != ''"> and slogan = #{slogan}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and createBy = #{createBy}</if>
+            <if test="updateTime != null "> and updateTime = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and updateBy = #{updateBy}</if>
+            <if test="delflag != null  and delflag != ''"> and delflag = #{delflag}</if>
+        </where>
+    </select>
+    
+    <select id="selectSportsCircleById" parameterType="Long" resultMap="SportsCircleResult">
+        <include refid="selectSportsCircleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSportsCircle" parameterType="SportsCircle" useGeneratedKeys="true" keyProperty="id">
+        insert into sports_circle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="name != null">name,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="personNumber != null">person_number,</if>
+            <if test="picUrl != null">picUrl,</if>
+            <if test="address != null">address,</if>
+            <if test="slogan != null">slogan,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="createBy != null">createBy,</if>
+            <if test="updateTime != null">updateTime,</if>
+            <if test="updateBy != null">updateBy,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delflag != null">delflag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="name != null">#{name},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="personNumber != null">#{personNumber},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="address != null">#{address},</if>
+            <if test="slogan != null">#{slogan},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delflag != null">#{delflag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSportsCircle" parameterType="SportsCircle">
+        update sports_circle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="personNumber != null">person_number = #{personNumber},</if>
+            <if test="picUrl != null">picUrl = #{picUrl},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="slogan != null">slogan = #{slogan},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="createBy != null">createBy = #{createBy},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="updateBy != null">updateBy = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delflag != null">delflag = #{delflag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSportsCircleById" parameterType="Long">
+        delete from sports_circle where id = #{id}
+    </delete>
+
+    <delete id="deleteSportsCircleByIds" parameterType="String">
+        delete from sports_circle where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

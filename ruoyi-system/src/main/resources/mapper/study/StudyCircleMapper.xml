@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.study.mapper.StudyCircleMapper">
+    
+    <resultMap type="StudyCircle" id="StudyCircleResult">
+        <result property="id"    column="id"    />
+        <result property="number"    column="number"    />
+        <result property="name"    column="name"    />
+        <result property="introduction"    column="introduction"    />
+        <result property="personNumber"    column="person_number"    />
+        <result property="picUrl"    column="picUrl"    />
+        <result property="address"    column="address"    />
+        <result property="slogan"    column="slogan"    />
+        <result property="createTime"    column="createTime"    />
+        <result property="createBy"    column="createBy"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="updateBy"    column="updateBy"    />
+        <result property="remark"    column="remark"    />
+        <result property="delflag"    column="delflag"    />
+        <result property="mainId"    column="main_id"    />
+        <result property="leader"    column="leader"    />
+        <result property="leaderId"    column="leader_id"    />
+    </resultMap>
+
+    <sql id="selectStudyCircleVo">
+        select id, number, name, introduction, person_number, picUrl, address, slogan, createTime, createBy, updateTime, updateBy, remark, delflag, main_id, leader, leader_id from study_circle
+    </sql>
+
+    <select id="selectStudyCircleList" parameterType="StudyCircle" resultMap="StudyCircleResult">
+        <include refid="selectStudyCircleVo"/>
+        <where>  
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="introduction != null  and introduction != ''"> and introduction = #{introduction}</if>
+            <if test="personNumber != null "> and person_number = #{personNumber}</if>
+            <if test="picUrl != null  and picUrl != ''"> and picUrl = #{picUrl}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="slogan != null  and slogan != ''"> and slogan = #{slogan}</if>
+            <if test="createTime != null "> and createTime = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and createBy = #{createBy}</if>
+            <if test="updateTime != null "> and updateTime = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and updateBy = #{updateBy}</if>
+            <if test="delflag != null  and delflag != ''"> and delflag = #{delflag}</if>
+            <if test="mainId != null "> and main_id = #{mainId}</if>
+            <if test="leader != null  and leader != ''"> and leader = #{leader}</if>
+            <if test="leaderId != null "> and leader_id = #{leaderId}</if>
+        </where>
+    </select>
+    
+    <select id="selectStudyCircleById" parameterType="Long" resultMap="StudyCircleResult">
+        <include refid="selectStudyCircleVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertStudyCircle" parameterType="StudyCircle" useGeneratedKeys="true" keyProperty="id">
+        insert into study_circle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="number != null">number,</if>
+            <if test="name != null">name,</if>
+            <if test="introduction != null">introduction,</if>
+            <if test="personNumber != null">person_number,</if>
+            <if test="picUrl != null">picUrl,</if>
+            <if test="address != null">address,</if>
+            <if test="slogan != null">slogan,</if>
+            <if test="createTime != null">createTime,</if>
+            <if test="createBy != null">createBy,</if>
+            <if test="updateTime != null">updateTime,</if>
+            <if test="updateBy != null">updateBy,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delflag != null">delflag,</if>
+            <if test="mainId != null">main_id,</if>
+            <if test="leader != null">leader,</if>
+            <if test="leaderId != null">leader_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="number != null">#{number},</if>
+            <if test="name != null">#{name},</if>
+            <if test="introduction != null">#{introduction},</if>
+            <if test="personNumber != null">#{personNumber},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="address != null">#{address},</if>
+            <if test="slogan != null">#{slogan},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delflag != null">#{delflag},</if>
+            <if test="mainId != null">#{mainId},</if>
+            <if test="leader != null">#{leader},</if>
+            <if test="leaderId != null">#{leaderId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateStudyCircle" parameterType="StudyCircle">
+        update study_circle
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="number != null">number = #{number},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="introduction != null">introduction = #{introduction},</if>
+            <if test="personNumber != null">person_number = #{personNumber},</if>
+            <if test="picUrl != null">picUrl = #{picUrl},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="slogan != null">slogan = #{slogan},</if>
+            <if test="createTime != null">createTime = #{createTime},</if>
+            <if test="createBy != null">createBy = #{createBy},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="updateBy != null">updateBy = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delflag != null">delflag = #{delflag},</if>
+            <if test="mainId != null">main_id = #{mainId},</if>
+            <if test="leader != null">leader = #{leader},</if>
+            <if test="leaderId != null">leader_id = #{leaderId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudyCircleById" parameterType="Long">
+        delete from study_circle where id = #{id}
+    </delete>
+
+    <delete id="deleteStudyCircleByIds" parameterType="String">
+        delete from study_circle where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sports.mapper.SportsCircleMemberMapper">
+    
+    <resultMap type="SportsCircleMember" id="SportsCircleMemberResult">
+        <result property="id"    column="id"    />
+        <result property="circleId"    column="circle_id"    />
+        <result property="type"    column="type"    />
+        <result property="name"    column="name"    />
+        <result property="nikeName"    column="nike_name"    />
+        <result property="idCard"    column="idCard"    />
+        <result property="age"    column="age"    />
+        <result property="sex"    column="sex"    />
+        <result property="phone"    column="phone"    />
+        <result property="hobby"    column="hobby"    />
+        <result property="picUrl"    column="picUrl"    />
+        <result property="createBy"    column="createBy"    />
+        <result property="updateTime"    column="updateTime"    />
+        <result property="updateBy"    column="updateBy"    />
+        <result property="remark"    column="remark"    />
+        <result property="delflag"    column="delflag"    />
+    </resultMap>
+
+    <sql id="selectSportsCircleMemberVo">
+        select id, circle_id, type, name, nike_name, idCard, age, sex, phone, hobby, picUrl, createBy, updateTime, updateBy, remark, delflag from sports_circle_member
+    </sql>
+
+    <select id="selectSportsCircleMemberList" parameterType="SportsCircleMember" resultMap="SportsCircleMemberResult">
+        <include refid="selectSportsCircleMemberVo"/>
+        <where>  
+            <if test="circleId != null  and circleId != ''"> and circle_id = #{circleId}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="nikeName != null  and nikeName != ''"> and nike_name like concat('%', #{nikeName}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and idCard = #{idCard}</if>
+            <if test="age != null "> and age = #{age}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="hobby != null  and hobby != ''"> and hobby = #{hobby}</if>
+            <if test="picUrl != null  and picUrl != ''"> and picUrl = #{picUrl}</if>
+            <if test="createBy != null  and createBy != ''"> and createBy = #{createBy}</if>
+            <if test="updateTime != null "> and updateTime = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and updateBy = #{updateBy}</if>
+            <if test="delflag != null  and delflag != ''"> and delflag = #{delflag}</if>
+        </where>
+    </select>
+    
+    <select id="selectSportsCircleMemberById" parameterType="Long" resultMap="SportsCircleMemberResult">
+        <include refid="selectSportsCircleMemberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertSportsCircleMember" parameterType="SportsCircleMember" useGeneratedKeys="true" keyProperty="id">
+        insert into sports_circle_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="circleId != null">circle_id,</if>
+            <if test="type != null">type,</if>
+            <if test="name != null">name,</if>
+            <if test="nikeName != null">nike_name,</if>
+            <if test="idCard != null">idCard,</if>
+            <if test="age != null">age,</if>
+            <if test="sex != null">sex,</if>
+            <if test="phone != null">phone,</if>
+            <if test="hobby != null">hobby,</if>
+            <if test="picUrl != null">picUrl,</if>
+            <if test="createBy != null">createBy,</if>
+            <if test="updateTime != null">updateTime,</if>
+            <if test="updateBy != null">updateBy,</if>
+            <if test="remark != null">remark,</if>
+            <if test="delflag != null">delflag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="circleId != null">#{circleId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="name != null">#{name},</if>
+            <if test="nikeName != null">#{nikeName},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="age != null">#{age},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="hobby != null">#{hobby},</if>
+            <if test="picUrl != null">#{picUrl},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="delflag != null">#{delflag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSportsCircleMember" parameterType="SportsCircleMember">
+        update sports_circle_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="circleId != null">circle_id = #{circleId},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="nikeName != null">nike_name = #{nikeName},</if>
+            <if test="idCard != null">idCard = #{idCard},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="hobby != null">hobby = #{hobby},</if>
+            <if test="picUrl != null">picUrl = #{picUrl},</if>
+            <if test="createBy != null">createBy = #{createBy},</if>
+            <if test="updateTime != null">updateTime = #{updateTime},</if>
+            <if test="updateBy != null">updateBy = #{updateBy},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="delflag != null">delflag = #{delflag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteSportsCircleMemberById" parameterType="Long">
+        delete from sports_circle_member where id = #{id}
+    </delete>
+
+    <delete id="deleteSportsCircleMemberByIds" parameterType="String">
+        delete from sports_circle_member where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
