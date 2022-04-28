@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.sign.mapper.SignRecordMapper">
+    
+    <resultMap type="SignRecord" id="SignRecordResult">
+        <result property="recordId"    column="record_id"    />
+        <result property="signDate"    column="sign_date"    />
+        <result property="signDesc"    column="sign_desc"    />
+        <result property="signUser"    column="sign_user"    />
+        <result property="signTime"    column="sign_time"    />
+        <result property="lastTime"    column="last_time"    />
+        <result property="signExperience"    column="sign_experience"    />
+    </resultMap>
+
+    <sql id="selectSignRecordVo">
+        select record_id, sign_date, sign_desc, sign_user, sign_time, last_time, sign_experience from sign_record
+    </sql>
+
+    <select id="selectSignRecordList" parameterType="SignRecord" resultMap="SignRecordResult">
+        <include refid="selectSignRecordVo"/>
+        <where>  
+            <if test="signDate != null "> and sign_date = #{signDate}</if>
+            <if test="signDesc != null  and signDesc != ''"> and sign_desc = #{signDesc}</if>
+            <if test="signUser != null  and signUser != ''"> and sign_user = #{signUser}</if>
+            <if test="signTime != null "> and sign_time = #{signTime}</if>
+            <if test="lastTime != null "> and last_time = #{lastTime}</if>
+            <if test="signExperience != null  and signExperience != ''"> and sign_experience = #{signExperience}</if>
+        </where>
+    </select>
+    
+    <select id="selectSignRecordById" parameterType="Long" resultMap="SignRecordResult">
+        <include refid="selectSignRecordVo"/>
+        where record_id = #{recordId}
+    </select>
+        
+    <insert id="insertSignRecord" parameterType="SignRecord" useGeneratedKeys="true" keyProperty="recordId">
+        insert into sign_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="signDate != null">sign_date,</if>
+            <if test="signDesc != null">sign_desc,</if>
+            <if test="signUser != null and signUser != ''">sign_user,</if>
+            <if test="signTime != null">sign_time,</if>
+            <if test="lastTime != null">last_time,</if>
+            <if test="signExperience != null">sign_experience,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="signDate != null">#{signDate},</if>
+            <if test="signDesc != null">#{signDesc},</if>
+            <if test="signUser != null and signUser != ''">#{signUser},</if>
+            <if test="signTime != null">#{signTime},</if>
+            <if test="lastTime != null">#{lastTime},</if>
+            <if test="signExperience != null">#{signExperience},</if>
+         </trim>
+    </insert>
+
+    <update id="updateSignRecord" parameterType="SignRecord">
+        update sign_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="signDate != null">sign_date = #{signDate},</if>
+            <if test="signDesc != null">sign_desc = #{signDesc},</if>
+            <if test="signUser != null and signUser != ''">sign_user = #{signUser},</if>
+            <if test="signTime != null">sign_time = #{signTime},</if>
+            <if test="lastTime != null">last_time = #{lastTime},</if>
+            <if test="signExperience != null">sign_experience = #{signExperience},</if>
+        </trim>
+        where record_id = #{recordId}
+    </update>
+
+    <delete id="deleteSignRecordById" parameterType="Long">
+        delete from sign_record where record_id = #{recordId}
+    </delete>
+
+    <delete id="deleteSignRecordByIds" parameterType="String">
+        delete from sign_record where record_id in 
+        <foreach item="recordId" collection="array" open="(" separator="," close=")">
+            #{recordId}
+        </foreach>
+    </delete>
+
+</mapper>
