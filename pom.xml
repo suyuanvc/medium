@@ -225,7 +225,6 @@
         <module>ruoyi-quartz</module>
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
-        <module>ruoyi-redis</module>
     </modules>
     <packaging>pom</packaging>
 
