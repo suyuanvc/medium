@@ -1,6 +1,9 @@
 package com.ruoyi.web.controller.sign;
 
 import java.util.List;
+
+import com.ruoyi.sign.domain.SignHabit;
+import com.ruoyi.sign.service.ISignHabitService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,10 +37,13 @@ public class SignListController extends BaseController
     @Autowired
     private ISignListService signListService;
 
-    @RequiresPermissions("system:list:view")
-    @GetMapping()
-    public String list()
+    @Autowired
+    private ISignHabitService signHabitService;
+
+    @GetMapping("/list/{recordId}")
+    public String list(@PathVariable("recordId") Long recordId,ModelMap mmap)
     {
+        mmap.put("recordId", recordId);
         return prefix + "/list";
     }
 
@@ -71,9 +77,13 @@ public class SignListController extends BaseController
     /**
      * 新增【请填写功能名称】
      */
-    @GetMapping("/add")
-    public String add()
+    @GetMapping("/add/{recordId}")
+    public String add(@PathVariable("recordId") Long recordId,ModelMap mmap)
     {
+        // 查询所有热门习惯
+        List<SignHabit> list = signHabitService.selectSignHabitList(null);
+        mmap.put("recordId",recordId);
+        mmap.put("list",list);
         return prefix + "/add";
     }
 

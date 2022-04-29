@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
-    <th:block th:include="include :: header('【请填写功能名称】列表')" />
+    <th:block th:include="include :: header('【打卡详情】列表')" />
 </head>
 <body class="gray-bg">
      <div class="container-div">
@@ -11,33 +11,11 @@
                     <div class="select-list">
                         <ul>
                             <li>
-                                <label>关联sign_record表id：</label>
-                                <input type="text" name="recordId"/>
+                                <label>记录编号：</label>
+                                <input type="text" id="recordId" name="recordId" th:value="${recordId}"/>
+                                <input type="hidden" id="recordId" th:value="${recordId}"/>
                             </li>
-                            <li>
-                                <label>关联sign_habit表id：</label>
-                                <input type="text" name="habitId"/>
-                            </li>
-                            <li>
-                                <label>打卡小时数：</label>
-                                <input type="text" name="signDurationHour"/>
-                            </li>
-                            <li>
-                                <label>打卡分钟数：</label>
-                                <input type="text" name="signDurationMinute"/>
-                            </li>
-                            <li>
-                                <label>打卡心得：</label>
-                                <input type="text" name="signExperience"/>
-                            </li>
-                            <li>
-                                <label>打卡心得：</label>
-                                <input type="text" class="time-input" placeholder="请选择打卡心得" name="startTime"/>
-                            </li>
-                            <li>
-                                <label>打卡心得：</label>
-                                <input type="text" class="time-input" placeholder="请选择打卡心得" name="endTime"/>
-                            </li>
+
                             <li>
                                 <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
                                 <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
@@ -48,16 +26,16 @@
             </div>
 
             <div class="btn-group-sm" id="toolbar" role="group">
-                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:list:add">
-                    <i class="fa fa-plus"></i> 添加
+                <a class="btn btn-success" onclick="addList()" shiro:hasPermission="sign:list:add">
+                    <i class="fa fa-plus"></i> 签到
                 </a>
-                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:list:edit">
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="sign:list:edit">
                     <i class="fa fa-edit"></i> 修改
                 </a>
-                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:list:remove">
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="sign:list:remove">
                     <i class="fa fa-remove"></i> 删除
                 </a>
-                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:list:export">
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="sign:list:export">
                     <i class="fa fa-download"></i> 导出
                 </a>
             </div>
@@ -68,18 +46,18 @@
     </div>
     <th:block th:include="include :: footer" />
     <script th:inline="javascript">
-        var editFlag = [[${@permission.hasPermi('system:list:edit')}]];
-        var removeFlag = [[${@permission.hasPermi('system:list:remove')}]];
-        var prefix = ctx + "system/list";
-
+        var editFlag = [[${@permission.hasPermi('sign:list:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('sign:list:remove')}]];
+        var prefix = ctx + "sign/list";
+        var recordId = $("#recordId").val();
         $(function() {
             var options = {
                 url: prefix + "/list",
-                createUrl: prefix + "/add",
+                createUrl: prefix + "/add/{id}",
                 updateUrl: prefix + "/edit/{id}",
                 removeUrl: prefix + "/remove",
                 exportUrl: prefix + "/export",
-                modalName: "【请填写功能名称】",
+                modalName: "【打卡详情】",
                 columns: [{
                     checkbox: true
                 },
@@ -89,20 +67,12 @@
                     visible: false
                 },
                 {
-                    field: 'recordId',
-                    title: '关联sign_record表id'
-                },
-                {
                     field: 'habitId',
-                    title: '关联sign_habit表id'
+                    title: '习惯名称'
                 },
                 {
                     field: 'signDurationHour',
-                    title: '打卡小时数'
-                },
-                {
-                    field: 'signDurationMinute',
-                    title: '打卡分钟数'
+                    title: '打卡时长'
                 },
                 {
                     field: 'signExperience',
@@ -110,11 +80,7 @@
                 },
                 {
                     field: 'startTime',
-                    title: '打卡心得'
-                },
-                {
-                    field: 'endTime',
-                    title: '打卡心得'
+                    title: '打卡时间段'
                 },
                 {
                     title: '操作',
@@ -129,6 +95,12 @@
             };
             $.table.init(options);
         });
+
+        function addList() {
+            table.set();
+            $.modal.open("添加" + table.options.modalName, $.operate.addUrl(recordId));
+           // $.operate.get(prefix + "/add/" + recordId);
+        }
     </script>
 </body>
 </html>
