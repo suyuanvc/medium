@@ -27,6 +27,9 @@ public class SignList extends BaseEntity
     /** 关联sign_habit表id */
     @Excel(name = "关联sign_habit表id")
     private Long habitId;
+    /** 关联sign_habit表id */
+    @Excel(name = "habitName")
+    private String habitName;
 
     /** 打卡小时数 */
     @Excel(name = "打卡小时数")
@@ -41,13 +44,13 @@ public class SignList extends BaseEntity
     private String signExperience;
 
     /** $column.columnComment */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "打卡心得", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "打卡心得", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
 
     /** $column.columnComment */
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    @Excel(name = "打卡心得", width = 30, dateFormat = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Excel(name = "打卡心得", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     public void setSignRecordId(Long signRecordId) 
@@ -123,12 +126,21 @@ public class SignList extends BaseEntity
         return endTime;
     }
 
+    public void setHabitName(String habitName) {
+        this.habitName = habitName;
+    }
+
+    public String getHabitName() {
+        return habitName;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("signRecordId", getSignRecordId())
             .append("recordId", getRecordId())
             .append("habitId", getHabitId())
+            .append("habitName", getHabitName())
             .append("signDurationHour", getSignDurationHour())
             .append("signDurationMinute", getSignDurationMinute())
             .append("signExperience", getSignExperience())

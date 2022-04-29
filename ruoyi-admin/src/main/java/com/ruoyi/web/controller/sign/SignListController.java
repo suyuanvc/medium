@@ -96,6 +96,9 @@ public class SignListController extends BaseController
     @ResponseBody
     public AjaxResult addSave(SignList signList)
     {
+        //
+        SignHabit signHabit = signHabitService.selectSignHabitById(Integer.parseInt(signList.getHabitId().toString()));
+        signList.setHabitName(signHabit.getHabitName());
         return toAjax(signListService.insertSignList(signList));
     }
 

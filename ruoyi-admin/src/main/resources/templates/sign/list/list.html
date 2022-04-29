@@ -67,12 +67,24 @@
                     visible: false
                 },
                 {
-                    field: 'habitId',
+                    field: 'habitName',
                     title: '习惯名称'
                 },
                 {
                     field: 'signDurationHour',
-                    title: '打卡时长'
+                    title: '打卡时长',
+                    width:10,
+                    formatter: function(value, row, index) {
+                        return value+"小时";
+                    }
+                },
+                {
+                    field: 'signDurationMinute',
+                    title: '',
+                    align:'left',
+                    formatter: function(value, row, index) {
+                        return value+"分";
+                    }
                 },
                 {
                     field: 'signExperience',
@@ -80,8 +92,28 @@
                 },
                 {
                     field: 'startTime',
-                    title: '打卡时间段'
+                    title: '打卡时间段',
+                    align: 'right',
+                    formatter: function(value, row, index) {
+                        var timeArr = value.replace(" ", ":").replace(/\:/g, "-").split("-");
+                        var shi = timeArr[3];
+                        var fen = timeArr[4];
+                        var miao = timeArr[5];
+                        return shi + ":" + fen + ":" + miao;
+                    }
                 },
+                    {
+                        field: 'endTime',
+                        title: '',
+                        align: 'left',
+                        formatter: function(value, row, index) {
+                            var timeArr = value.replace(" ", ":").replace(/\:/g, "-").split("-");
+                            var shi = timeArr[3];
+                            var fen = timeArr[4];
+                            var miao = timeArr[5];
+                            return shi + ":" + fen + ":" + miao;
+                        }
+                    },
                 {
                     title: '操作',
                     align: 'center',

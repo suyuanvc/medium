@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="signRecordId"    column="sign_record_id"    />
         <result property="recordId"    column="record_id"    />
         <result property="habitId"    column="habit_id"    />
+        <result property="habitName"    column="habit_name"    />
         <result property="signDurationHour"    column="sign_duration_hour"    />
         <result property="signDurationMinute"    column="sign_duration_minute"    />
         <result property="signExperience"    column="sign_experience"    />
@@ -16,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectSignListVo">
-        select sign_record_id, record_id, habit_id, sign_duration_hour, sign_duration_minute, sign_experience, start_time, end_time from sign_list
+        select sign_record_id, record_id, habit_id,habit_name, sign_duration_hour, sign_duration_minute, sign_experience, start_time, end_time from sign_list
     </sql>
 
     <select id="selectSignListList" parameterType="SignList" resultMap="SignListResult">
@@ -24,6 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="recordId != null "> and record_id = #{recordId}</if>
             <if test="habitId != null "> and habit_id = #{habitId}</if>
+            <if test="habitName != null "> and habit_name = #{habitName}</if>
             <if test="signDurationHour != null "> and sign_duration_hour = #{signDurationHour}</if>
             <if test="signDurationMinute != null "> and sign_duration_minute = #{signDurationMinute}</if>
             <if test="signExperience != null  and signExperience != ''"> and sign_experience = #{signExperience}</if>
@@ -42,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="recordId != null">record_id,</if>
             <if test="habitId != null">habit_id,</if>
+            <if test="habitName != null">habit_name,</if>
             <if test="signDurationHour != null">sign_duration_hour,</if>
             <if test="signDurationMinute != null">sign_duration_minute,</if>
             <if test="signExperience != null">sign_experience,</if>
@@ -51,6 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="recordId != null">#{recordId},</if>
             <if test="habitId != null">#{habitId},</if>
+            <if test="habitName != null">#{habitName},</if>
             <if test="signDurationHour != null">#{signDurationHour},</if>
             <if test="signDurationMinute != null">#{signDurationMinute},</if>
             <if test="signExperience != null">#{signExperience},</if>
@@ -64,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="recordId != null">record_id = #{recordId},</if>
             <if test="habitId != null">habit_id = #{habitId},</if>
+            <if test="habitName != null">habit_id = #{habitName},</if>
             <if test="signDurationHour != null">sign_duration_hour = #{signDurationHour},</if>
             <if test="signDurationMinute != null">sign_duration_minute = #{signDurationMinute},</if>
             <if test="signExperience != null">sign_experience = #{signExperience},</if>
