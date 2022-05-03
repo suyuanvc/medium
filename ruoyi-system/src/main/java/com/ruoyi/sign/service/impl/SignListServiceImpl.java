@@ -1,6 +1,8 @@
 package com.ruoyi.sign.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.sign.vo.StatisticsHabitVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.sign.mapper.SignListMapper;
@@ -30,6 +32,15 @@ public class SignListServiceImpl implements ISignListService
     public SignList selectSignListById(Long signRecordId)
     {
         return signListMapper.selectSignListById(signRecordId);
+    }
+
+    /**
+     * 统计各习惯签到打卡时长
+     *
+     */
+    @Override
+    public List<StatisticsHabitVo> selectTimesByStatictics(SignList signList){
+        return signListMapper.selectTimesByStatictics(signList);
     }
 
     /**

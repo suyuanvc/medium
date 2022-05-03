@@ -2,6 +2,7 @@ package com.ruoyi.sign.service;
 
 import java.util.List;
 import com.ruoyi.sign.domain.SignList;
+import com.ruoyi.sign.vo.StatisticsHabitVo;
 
 /**
  * 【请填写功能名称】Service接口
@@ -18,6 +19,12 @@ public interface ISignListService
      * @return 【请填写功能名称】
      */
     public SignList selectSignListById(Long signRecordId);
+
+    /**
+     * 统计各习惯签到打卡时长
+     *
+     */
+    public List<StatisticsHabitVo> selectTimesByStatictics(SignList signList);
 
     /**
      * 查询【请填写功能名称】列表

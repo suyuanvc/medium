@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.ruoyi.sign.domain.SignHabit;
 import com.ruoyi.sign.service.ISignHabitService;
+import com.ruoyi.web.core.common.CommonConfig;
+import com.ruoyi.web.core.vo.SignListVo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +42,9 @@ public class SignListController extends BaseController
 
     @Autowired
     private ISignHabitService signHabitService;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
 
     @GetMapping("/list/{recordId}")
     public String list(@PathVariable("recordId") Long recordId,ModelMap mmap)
@@ -96,7 +102,7 @@ public class SignListController extends BaseController
     @ResponseBody
     public AjaxResult addSave(SignList signList)
     {
-        //
+        redisTemplate.opsForList().leftPush(CommonConfig.HABIT_HOT,signList.getHabitId().toString());
         SignHabit signHabit = signHabitService.selectSignHabitById(Integer.parseInt(signList.getHabitId().toString()));
         signList.setHabitName(signHabit.getHabitName());
         return toAjax(signListService.insertSignList(signList));
@@ -109,6 +115,8 @@ public class SignListController extends BaseController
     public String edit(@PathVariable("signRecordId") Long signRecordId, ModelMap mmap)
     {
         SignList signList = signListService.selectSignListById(signRecordId);
+        List<SignHabit> list = signHabitService.selectSignHabitList(null);
+        mmap.put("list",list);
         mmap.put("signList", signList);
         return prefix + "/edit";
     }
@@ -122,6 +130,8 @@ public class SignListController extends BaseController
     @ResponseBody
     public AjaxResult editSave(SignList signList)
     {
+        SignHabit signHabit = signHabitService.selectSignHabitById(Integer.parseInt(signList.getHabitId().toString()));
+        signList.setHabitName(signHabit.getHabitName());
         return toAjax(signListService.updateSignList(signList));
     }
 

@@ -68,52 +68,34 @@
                 },
                 {
                     field: 'habitName',
+                    align: 'center',
                     title: '习惯名称'
                 },
                 {
                     field: 'signDurationHour',
                     title: '打卡时长',
-                    width:10,
+                    align: 'center',
                     formatter: function(value, row, index) {
-                        return value+"小时";
-                    }
-                },
-                {
-                    field: 'signDurationMinute',
-                    title: '',
-                    align:'left',
-                    formatter: function(value, row, index) {
-                        return value+"分";
+                        return row.signDurationHour+"小时" +row.signDurationMinute + "分";
                     }
                 },
                 {
                     field: 'signExperience',
+                    align: 'center',
                     title: '打卡心得'
                 },
                 {
                     field: 'startTime',
                     title: '打卡时间段',
-                    align: 'right',
+                    align: 'center',
                     formatter: function(value, row, index) {
-                        var timeArr = value.replace(" ", ":").replace(/\:/g, "-").split("-");
-                        var shi = timeArr[3];
-                        var fen = timeArr[4];
-                        var miao = timeArr[5];
-                        return shi + ":" + fen + ":" + miao;
+                        var timeArr = row.startTime.replace(" ", ":").replace(/\:/g, "-").split("-");
+                        var time1 = timeArr[3] + ":" + timeArr[4] + ":" + timeArr[5];;
+                        var timeArr2 = row.endTime.replace(" ", ":").replace(/\:/g, "-").split("-");
+                        var time2 = timeArr2[3] + ":" + timeArr2[4] + ":" + timeArr2[5];;
+                        return time1 + " > " + time2;
                     }
                 },
-                    {
-                        field: 'endTime',
-                        title: '',
-                        align: 'left',
-                        formatter: function(value, row, index) {
-                            var timeArr = value.replace(" ", ":").replace(/\:/g, "-").split("-");
-                            var shi = timeArr[3];
-                            var fen = timeArr[4];
-                            var miao = timeArr[5];
-                            return shi + ":" + fen + ":" + miao;
-                        }
-                    },
                 {
                     title: '操作',
                     align: 'center',

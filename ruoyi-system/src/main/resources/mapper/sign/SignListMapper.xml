@@ -16,6 +16,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="endTime"    column="end_time"    />
     </resultMap>
 
+    <resultMap id="StaticticsResult" type="SignList">
+        <result property="signDurationHour"     column="sign_duration_hour"      />
+        <result property="signDurationMinute"     column="sign_duration_minute"      />
+        <result property="habitId"    column="habit_id"    />
+        <result property="habitName"    column="habit_name"    />
+    </resultMap>
+
     <sql id="selectSignListVo">
         select sign_record_id, record_id, habit_id,habit_name, sign_duration_hour, sign_duration_minute, sign_experience, start_time, end_time from sign_list
     </sql>
@@ -37,6 +44,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="selectSignListById" parameterType="Long" resultMap="SignListResult">
         <include refid="selectSignListVo"/>
         where sign_record_id = #{signRecordId}
+    </select>
+
+    <select id="selectTimesByStatictics" parameterType="SignList" resultType="com.ruoyi.sign.vo.StatisticsHabitVo">
+        select sum(s.sign_duration_hour) as totalHour,
+                sum(s.sign_duration_minute) as totalMinute,
+                s.habit_id as habitId,s.habit_name as habitName
+        from sign_list s
+        left join sign_record r on s.record_id = r.record_id
+
+        <where>
+            <if test="habitId != null "> and s.habit_id = #{habitId}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(r.sign_date,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(r.sign_date,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+        </where>
+
+        GROUP BY s.habit_id,s.habit_name
     </select>
         
     <insert id="insertSignList" parameterType="SignList" useGeneratedKeys="true" keyProperty="signRecordId">
@@ -68,7 +95,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="recordId != null">record_id = #{recordId},</if>
             <if test="habitId != null">habit_id = #{habitId},</if>
-            <if test="habitName != null">habit_id = #{habitName},</if>
+            <if test="habitName != null">habit_name = #{habitName},</if>
             <if test="signDurationHour != null">sign_duration_hour = #{signDurationHour},</if>
             <if test="signDurationMinute != null">sign_duration_minute = #{signDurationMinute},</if>
             <if test="signExperience != null">sign_experience = #{signExperience},</if>

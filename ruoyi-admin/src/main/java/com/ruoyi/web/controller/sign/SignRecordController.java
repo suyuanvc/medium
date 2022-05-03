@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.sign;
 
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.utils.ShiroUtils;
@@ -118,6 +119,7 @@ public class SignRecordController extends BaseController
     @ResponseBody
     public AjaxResult editSave(SignRecord signRecord)
     {
+        signRecord.setLastTime(new Date());
         return toAjax(signRecordService.updateSignRecord(signRecord));
     }
 
